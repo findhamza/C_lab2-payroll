@@ -41,11 +41,18 @@ void Heading()
 }
 void NewPage()
 {
-	char n_buffer[310];
+	char n_buffer[510];
 
 	char acme[] = "ACME";
-	sprintf(n_buffer, "\n%s\n%s\n\nEMP#\tNAME     \t\tDEPT.\t     NEW YTD\t\tGROSS\t\tFICA\t\tNET\n\n",
-		PageBrk(), CntrTxt(acme));
+	char emp[] = "EMP#";
+	char name[] = "NAME";
+	char dept[] = "DEPT.";
+	char ytd[] = "NEW YTD";
+	char gross[] = "GROSS";
+	char fica[] = "FICA";
+	char net[] = "NET";
+	sprintf(n_buffer, "\n%s\f\r\n%s\n%s\n\n%-8s%-24s%-13s%-19s%-16s%-16s%s\n\n",
+		PageBrk(), PageBrk(), CntrTxt(acme), emp, name, dept, ytd, gross, fica, net);
 
 //	printf("%s",n_buffer);
 	print(n_buffer);
@@ -88,7 +95,7 @@ void DeptTotal(char *dept, double deptWage, double deptTax)
 }
 void Footer(double totalWage, double totalTax, int totalRecords)
 {
-	char f_buffer[500];
+	char f_buffer[900];
 
 	char fTitle[] = "Report Summary";
 	char tRecords[] = "Records Processed: ";
@@ -96,8 +103,8 @@ void Footer(double totalWage, double totalTax, int totalRecords)
 	char tNet[] = "Total Net: ";
 	char tFica[] = "Total FICA";
 
-	sprintf(f_buffer, "\n%s\n%s\n\n%-25s%10d \n%-25s%10s \n%-25s%10s \n%-25s%10s\n\n%s\n",
-		PageBrk(), CntrTxt(fTitle), tRecords, totalRecords, tGross, MonFrmt(totalWage),
+	sprintf(f_buffer, "\n%s\f\r\n%s\n%s\n\n%-25s%10d \n%-25s%10s \n%-25s%10s \n%-25s%10s\n\n%s\n",
+		PageBrk(), PageBrk(), CntrTxt(fTitle), tRecords, totalRecords, tGross, MonFrmt(totalWage),
 		tNet, MonFrmt(totalWage-totalTax), tFica, MonFrmt(totalTax), PageBrk());
 
 	print(f_buffer);
