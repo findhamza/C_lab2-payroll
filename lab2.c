@@ -113,6 +113,8 @@ void OpEmp(struct fica ficaInfo)
 	char empOut[30];
 	printf("\nPlease enter payroll file name: ");
 	scanf("%s",empOut);
+	char *empOut_temp;
+	empOut_temp = empOut;
 	if(access(empOut, F_OK) != -1)
 	{
 		printf("\nFILE ALREADY EXIST\n\nThis Program Will Now Self Terminate\n\n");
@@ -185,7 +187,7 @@ void OpEmp(struct fica ficaInfo)
 	int close_all = fcloseall();
 	fflush(stdout);
 
-	rename("tempPayRollFile5569.txt", empOut);
+	rename("tempPayRollFile5569.txt", empOut_temp);
 
 
 	return;
