@@ -30,7 +30,7 @@ void print(char *buffer)
 }
 void Heading()
 {
-	char h_buffer[300];
+	char h_buffer[750];
 
 	char acme[] = "ACME Sports Inc.";
 	char motto[] = "We are the best, you use the best!";
@@ -41,25 +41,18 @@ void Heading()
 }
 void NewPage()
 {
-	char n_buffer[510];
+	char n_buffer[750];
 
 	char acme[] = "ACME";
-	char emp[] = "EMP#";
-	char name[] = "NAME";
-	char dept[] = "DEPT.";
-	char ytd[] = "NEW YTD";
-	char gross[] = "GROSS";
-	char fica[] = "FICA";
-	char net[] = "NET";
-	sprintf(n_buffer, "\n%s\f\r\n%s\n%s\n\n%-8s%-24s%-13s%-19s%-16s%-16s%s\n\n",
-		PageBrk(), PageBrk(), CntrTxt(acme), emp, name, dept, ytd, gross, fica, net);
+	sprintf(n_buffer, "\n%s\n%s\n\nEMP#\tNAME     \t\tDEPT.\t     NEW YTD\t\tGROSS\t\tFICA\t\tNET\n\n",
+		PageBrk(), CntrTxt(acme));
 
 //	printf("%s",n_buffer);
 	print(n_buffer);
 }
 void PrintEmp(struct emp empInfo, double grossWage, double ficaTax)
 {
-	char e_buffer[200];
+	char e_buffer[750];
 
 	sprintf(e_buffer, "%4.0d\t%-9.9s %-13.9s %-7.5s %12s%17s%15s%15s\n", empInfo.empNum,
 		empInfo.first, empInfo.last, empInfo.dept, MonFrmt((empInfo.ytd)+grossWage),
@@ -69,21 +62,21 @@ void PrintEmp(struct emp empInfo, double grossWage, double ficaTax)
 }
 void PageTotal(double pageWage, double pageTax, int pageNum)
 {
-	char p_buffer[390];
+	char p_buffer[750];
 
 	char *bttmDash = malloc(32 * sizeof(char));
 	char *spaceSet = malloc(91 * sizeof(char));
 	memset(bttmDash, '_', 31);
 	memset(spaceSet, ' ', 90);
-	sprintf(p_buffer, "\n%s PAGE TOTALS:%25s%15s%15s\n\n%sPAGE:%4d", bttmDash, 
+	sprintf(p_buffer, "\n%s PAGE TOTALS:%25s%15s%15s\n\n%sPAGE:%4d\n%s\f\r\n", bttmDash, 
 		MonFrmt(pageWage), MonFrmt(pageTax),
-		MonFrmt(pageWage-pageTax), spaceSet, pageNum);
+		MonFrmt(pageWage-pageTax), spaceSet, pageNum, PageBrk());
 
 	print(p_buffer);
 }
 void DeptTotal(char *dept, double deptWage, double deptTax)
 {
-	char d_buffer[200];
+	char d_buffer[750];
 
 	char deptStr[] = " DEPT. TOTALS:";
 	char *bttmDot = malloc(32 * sizeof(char));
@@ -93,9 +86,11 @@ void DeptTotal(char *dept, double deptWage, double deptTax)
 
 	print(d_buffer);
 }
-void Footer(double totalWage, double totalTax, int totalRecords)
+void Footer(double totalWage, double totalTax, int totalRecords, int pageNum)
 {
-	char f_buffer[900];
+	char f_buffer[750];
+
+	double netPay = totalWage-totalTax;
 
 	char fTitle[] = "Report Summary";
 	char tRecords[] = "Records Processed: ";
@@ -103,9 +98,12 @@ void Footer(double totalWage, double totalTax, int totalRecords)
 	char tNet[] = "Total Net: ";
 	char tFica[] = "Total FICA";
 
-	sprintf(f_buffer, "\n%s\f\r\n%s\n%s\n\n%-25s%10d \n%-25s%10s \n%-25s%10s \n%-25s%10s\n\n%s\n",
-		PageBrk(), PageBrk(), CntrTxt(fTitle), tRecords, totalRecords, tGross, MonFrmt(totalWage),
-		tNet, MonFrmt(totalWage-totalTax), tFica, MonFrmt(totalTax), PageBrk());
+	char *spaceSet = malloc(91 * sizeof(char));
+	memset(spaceSet, ' ', 90);
+
+	sprintf(f_buffer, "\n%s\n%s\n\n%-25s%10d \n%-25s%10s \n%-25s%10s \n%-25s%10s\n\n%sPAGE:%4d\n%s\r\n",
+		PageBrk(), CntrTxt(fTitle), tRecords, totalRecords, tGross, MonFrmt(totalWage),
+		tNet, MonFrmt(netPay), tFica, MonFrmt(totalTax), spaceSet, pageNum, PageBrk());
 
 	print(f_buffer);
 }

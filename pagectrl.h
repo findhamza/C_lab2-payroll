@@ -10,5 +10,5 @@ void NewPage();
 void PrintEmp(struct emp empInfo, double grossWage, double ficaTax);
 void PageTotal(double pageWage, double pageTax, int pageNum);
 void DeptTotal(char *dept, double deptWage, double deptTax);
-void Footer(double totalWage, double totalTax, int totalRecords);
+void Footer(double totalWage, double totalTax, int totalRecords, int pageNum);
 void Protection_buff();

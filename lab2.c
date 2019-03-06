@@ -180,7 +180,7 @@ void OpEmp(struct fica ficaInfo)
 	}
 	DeptTotal(dept,deptWage,deptTax);
 	PageTotal(pageWage,pageTax,(int)(totalEmp/4));
-	Footer(totalWage,totalTax,totalEmp);
+	Footer(totalWage,totalTax,totalEmp,(int)((totalEmp+4)/4));
 
 	Protection_buff();
 
